@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فروشگاه من</title>
+    
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <!-- بخش هدر: بالای سایت که شامل اسم سایت و سبد خریده -->
+    <header>
+        <h1>فروشگاه آنلاین من</h1>
+        <div id="cart-info">
+            سبد خرید: <span id="cart-count">0</span> کالا
+        </div>
+    </header>
+    <!-- بخش فاکتور و سبد خرید -->
+    <div style="background: white; padding: 20px; margin-top: 30px; border-radius: 8px; border: 1px solid #ddd;">
+        <h2>فاکتور سفارش شما</h2>
+        
+        <!-- لیست محصولاتی که کاربر انتخاب میکنه اینجا میاد -->
+        <ul id="cart-items" style="list-style: none; padding: 0; margin-bottom: 20px;">
+        </ul>
+        
+        <h3 style="text-align: left; color: #27ae60;">جمع کل: <span id="total-price">0</span> تومان</h3>
+        
+        <button id="submit-order-btn" style="background: #e67e22; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; width: 100%;">ثبت نهایی سفارش</button>
+        <p id="order-message" style="margin-top: 15px; font-weight: bold; text-align: center;"></p>
+    </div>
+
+    <!-- بخش اصلی: جایی که محصولات رو نمایش میدیم -->
+    <main>
+             <!-- بخش فرم ثبت‌نام -->
+    <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd; text-align: center;">
+        <h3>ثبت‌نام در عسل شفا</h3>
+        
+        <!-- مرحله اول: گرفتن ایمیل -->
+        <div id="step-1-email">
+            <p>برای ثبت‌نام، ایمیل خود را وارد کنید:</p>
+            <input type="email" id="register-email" placeholder="مثال: user@gmail.com" required style="padding: 10px; width: 80%; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
+            <br>
+            <button id="send-code-btn" style="background: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px;">ارسال کد تایید</button>
+        </div>
+
+        <!-- مرحله دوم: گرفتن کد تایید (این بخش اولش مخفیه) -->
+        <div id="step-2-code" style="display: none;">
+            <p style="color: green;">کد ۶ رقمی به ایمیل شما ارسال شد.</p>
+            <input type="number" id="verify-code" placeholder="کد ۶ رقمی را وارد کنید" required style="padding: 10px; width: 80%; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; text-align: center; letter-spacing: 5px;">
+            <br>
+            <button id="verify-btn" style="background: #27ae60; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px;">تایید نهایی ثبت‌نام</button>
+        </div>
+        
+        <!-- جایی که پیام‌ها رو نشون میدیم -->
+        <p id="register-message" style="margin-top: 15px; font-weight: bold;"></p>
+    </div>
+
+    <h2>محصولات ما</h2>
+    
+    <!-- یه ظرف خالی می‌سازیم تا اطلاعات رو از پایتون بگیریم و بریزیم اینجا -->
+    <div id="products-container" style="display: flex; gap: 20px; flex-wrap: wrap; width: 100%;">
+    </div>
+
+    </main>
+
+    <!-- بخش فوتر: پایین سایت -->
+    <footer>
+        <p>تمامی حقوق برای فروشگاه من محفوظ است.</p>
+    </footer>
+    <!-- این خط رو قبل از بسته شدن body اضافه کن -->
+    <script src="script.js"></script>
+
+</body>
+</html>
