@@ -1,10 +1,9 @@
 const BASE_URL = 'https://asalshafa-backend.onrender.com';
 
-// لیست محصولات با تصاویر و جزئیات جذاب
-const defaultProducts = [
+const products = [
     {
         id: 1,
-        name: "عسل طبیعی کوهستان سبلان (یک کیلو)",
+        name: "عسل طبیعی کوهستان سبلان",
         price: 350000,
         oldPrice: 420000,
         discount: 16,
@@ -14,7 +13,7 @@ const defaultProducts = [
     },
     {
         id: 2,
-        name: "عسل چهل گیاه خوانسار درجه یک",
+        name: "عسل چهل گیاه خوانسار",
         price: 280000,
         oldPrice: 310000,
         discount: 10,
@@ -34,7 +33,7 @@ const defaultProducts = [
     },
     {
         id: 4,
-        name: "ژل رویال اصل و ارگانیک (۵۰ گرم)",
+        name: "ژل رویال اصل و ارگانیک",
         price: 650000,
         oldPrice: 750000,
         discount: 13,
@@ -48,7 +47,6 @@ const productsContainer = document.getElementById('products-container');
 const cartCountElement = document.getElementById('cart-count');
 const cartItemsContainer = document.getElementById('cart-items');
 const totalPriceElement = document.getElementById('total-price');
-
 const cartDrawer = document.getElementById('cart-drawer');
 const overlay = document.getElementById('overlay');
 const openCartBtn = document.getElementById('open-cart-btn');
@@ -57,26 +55,30 @@ const closeCartBtn = document.getElementById('close-cart-btn');
 let cart = [];
 let totalPrice = 0;
 
-// باز و بسته کردن سایدبار سبد خرید
-openCartBtn.addEventListener('click', () => {
-    cartDrawer.classList.add('open');
-    overlay.classList.add('open');
-});
+if (openCartBtn) {
+    openCartBtn.addEventListener('click', () => {
+        cartDrawer.classList.add('open');
+        overlay.classList.add('open');
+    });
+}
 
-closeCartBtn.addEventListener('click', () => {
-    cartDrawer.classList.remove('open');
-    overlay.classList.remove('open');
-});
+if (closeCartBtn) {
+    closeCartBtn.addEventListener('click', () => {
+        cartDrawer.classList.remove('open');
+        overlay.classList.remove('open');
+    });
+}
 
-overlay.addEventListener('click', () => {
-    cartDrawer.classList.remove('open');
-    overlay.classList.remove('open');
-});
+if (overlay) {
+    overlay.addEventListener('click', () => {
+        cartDrawer.classList.remove('open');
+        overlay.classList.remove('open');
+    });
+}
 
-// تابع رندر کردن محصولات روی صفحه
-function renderProducts(productsList) {
+function renderProducts() {
     productsContainer.innerHTML = '';
-    productsList.forEach(product => {
+    products.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
@@ -93,7 +95,6 @@ function renderProducts(productsList) {
                     </div>
                 </div>
             </div>
-            
             <div>
                 <div class="price-box">
                     <div class="old-price">${product.oldPrice.toLocaleString('fa-IR')} تومان</div>
@@ -108,32 +109,16 @@ function renderProducts(productsList) {
     });
 }
 
-// لود اولیه محصولات
-renderProducts(defaultProducts);
+renderProducts();
 
-// دریافت محصولات هماهنگ شده از سرور آنلاین Render
-fetch(`${BASE_URL}/api/products`)
-    .then(res => res.json())
-    .then(backendProducts => {
-        // در صورت برقراری اتصال با سرور، لیست محصولات هماهنگ می‌شود
-        console.log("محصولات از سرور آنلاین دریافت شد:", backendProducts);
-    })
-    .catch(err => {
-        console.log("استفاده از محصولات پیش‌فرض (سرور در حالت خواب است)");
-    });
-
-// تابع افزودن به سبد خرید
 function addToCart(name, price) {
     cart.push({ name, price });
     totalPrice += price;
     updateCartUI();
-
-    // باز کردن موقت کشو برای نشان دادن ثبت کالا
     cartDrawer.classList.add('open');
     overlay.classList.add('open');
 }
 
-// بروزرسانی ظاهر سبد خرید
 function updateCartUI() {
     cartCountElement.innerText = cart.length;
     totalPriceElement.innerText = totalPrice.toLocaleString('fa-IR');
@@ -160,25 +145,21 @@ function updateCartUI() {
     });
 }
 
-// حذف آیتم از سبد
 function removeFromCart(index) {
     totalPrice -= cart[index].price;
     cart.splice(index, 1);
     updateCartUI();
 }
 
-// ثبت نهایی سفارش به سرور ابری Render
 document.getElementById('submit-order-btn').addEventListener('click', () => {
     const orderMessage = document.getElementById('order-message');
-
     if (cart.length === 0) {
         orderMessage.style.color = '#ef4444';
         orderMessage.innerText = 'سبد خرید شما خالی است!';
         return;
     }
-
     orderMessage.style.color = '#2563eb';
-    orderMessage.innerText = 'در حال ارسال فاکتور به سرور...';
+    orderMessage.innerText = 'در حال ارسال فاکتور...';
 
     fetch(`${BASE_URL}/api/order`, {
         method: 'POST',
@@ -187,24 +168,18 @@ document.getElementById('submit-order-btn').addEventListener('click', () => {
     })
     .then(res => res.json())
     .then(data => {
-        if (data.status === 'success') {
-            orderMessage.style.color = '#16a34a';
-            orderMessage.innerText = data.message;
-            cart = [];
-            totalPrice = 0;
-            updateCartUI();
-        } else {
-            orderMessage.style.color = '#ef4444';
-            orderMessage.innerText = 'خطا در ثبت سفارش.';
-        }
+        orderMessage.style.color = '#16a34a';
+        orderMessage.innerText = data.message;
+        cart = [];
+        totalPrice = 0;
+        updateCartUI();
     })
     .catch(() => {
         orderMessage.style.color = '#ef4444';
-        orderMessage.innerText = 'سرور در دسترس نیست یا در حال بیدار شدن است.';
+        orderMessage.innerText = 'خطا در ارتباط با سرور.';
     });
 });
 
-// احراز هویت با ایمیل
 const step1Div = document.getElementById('step-1-email');
 const step2Div = document.getElementById('step-2-code');
 const emailInput = document.getElementById('register-email');
@@ -217,7 +192,6 @@ let userEmail = '';
 
 sendCodeBtn.addEventListener('click', () => {
     userEmail = emailInput.value.trim();
-
     if (!userEmail) {
         registerMessage.style.color = '#ef4444';
         registerMessage.innerText = 'لطفاً ایمیل خود را وارد کنید.';
@@ -225,7 +199,7 @@ sendCodeBtn.addEventListener('click', () => {
     }
 
     registerMessage.style.color = '#2563eb';
-    registerMessage.innerText = 'در حال ارسال کد به ایمیل شما...';
+    registerMessage.innerText = 'در حال ارتباط با سرور و ارسال کد... (ممکن است تا ۳۰ ثانیه طول بکشد)';
 
     fetch(`${BASE_URL}/api/register`, {
         method: 'POST',
@@ -245,16 +219,15 @@ sendCodeBtn.addEventListener('click', () => {
     })
     .catch(() => {
         registerMessage.style.color = '#ef4444';
-        registerMessage.innerText = 'خطا در ارسال درخواست به سرور.';
+        registerMessage.innerText = 'سرور در حال بیدار شدن است. لطفاً بعد از چند ثانیه دوباره کلیک کنید.';
     });
 });
 
 verifyBtn.addEventListener('click', () => {
     const userCode = codeInput.value.trim();
-
     if (!userCode) {
         registerMessage.style.color = '#ef4444';
-        registerMessage.innerText = 'لطفاً کد تایید را وارد کنید.';
+        registerMessage.innerText = 'کد را وارد کنید.';
         return;
     }
 
