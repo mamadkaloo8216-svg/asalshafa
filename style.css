@@ -1,0 +1,53 @@
+body {
+    font-family: Tahoma, Arial, sans-serif; /* فونت ساده و خوانا */
+    background-color: #f4f4f9; /* یک رنگ پس‌زمینه ملایم */
+    margin: 0;
+    padding: 0;
+}
+
+/* استایل بخش هدر (بالای سایت) */
+header {
+    background-color: #2c3e50; /* رنگ سرمه‌ای تیره */
+    color: white;
+    padding: 15px 20px;
+    display: flex; /* این دستور باعث میشه عناصر کنار هم قرار بگیرن */
+    justify-content: space-between; /* یکی راست و یکی چپ قرار میگیره */
+    align-items: center; /* از نظر عمودی وسط‌چین میشن */
+}
+
+/* استایل بخش اصلی که محصولات توش هستن */
+main {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap; /* اگر جا نبود، محصول بعدی میره خط پایین */
+    gap: 20px; /* فاصله بین محصولات */
+}
+
+/* استایل کارت هر محصول */
+.product {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* گوشه‌های کادر رو گرد میکنه */
+    padding: 20px;
+    width: 100%;
+    max-width: 300px; /* حداکثر عرض هر محصول */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* یک سایه ملایم به کارت میده */
+    text-align: center;
+}
+
+/* استایل دکمه‌های افزودن به سبد خرید */
+.add-to-cart-btn {
+    background-color: #27ae60; /* رنگ سبز */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer; /* موس رو شبیه دست میکنه */
+    font-size: 16px;
+    width: 100%;
+}
+
+/* وقتی موس میره روی دکمه، رنگش کمی تیره بشه */
+.add-to-cart-btn:hover {
+    background-color: #219150;
+}
