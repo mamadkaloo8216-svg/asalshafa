@@ -1,53 +1,427 @@
-body {
-    font-family: Tahoma, Arial, sans-serif; /* فونت ساده و خوانا */
-    background-color: #f4f4f9; /* یک رنگ پس‌زمینه ملایم */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* استایل بخش هدر (بالای سایت) */
-header {
-    background-color: #2c3e50; /* رنگ سرمه‌ای تیره */
-    color: white;
-    padding: 15px 20px;
-    display: flex; /* این دستور باعث میشه عناصر کنار هم قرار بگیرن */
-    justify-content: space-between; /* یکی راست و یکی چپ قرار میگیره */
-    align-items: center; /* از نظر عمودی وسط‌چین میشن */
+body {
+    background-color: #f7f9fa;
+    color: #2b2b2b;
+    padding-bottom: 50px;
 }
 
-/* استایل بخش اصلی که محصولات توش هستن */
-main {
-    padding: 20px;
+/* هدر و ناوبری */
+.header {
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.top-nav {
     display: flex;
-    flex-wrap: wrap; /* اگر جا نبود، محصول بعدی میره خط پایین */
-    gap: 20px; /* فاصله بین محصولات */
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 15px;
 }
 
-/* استایل کارت هر محصول */
-.product {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px; /* گوشه‌های کادر رو گرد میکنه */
-    padding: 20px;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #d97706; /* طلایی عسلی */
+}
+
+.search-box {
+    flex: 1;
+    max-width: 500px;
+    position: relative;
+}
+
+.search-box input {
     width: 100%;
-    max-width: 300px; /* حداکثر عرض هر محصول */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* یک سایه ملایم به کارت میده */
+    padding: 10px 40px 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #f1f5f9;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.search-box input:focus {
+    background: #fff;
+    border-color: #d97706;
+}
+
+.search-box i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.cart-btn {
+    position: relative;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 18px;
+    color: #334155;
+    cursor: pointer;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 11px;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.promo-banner {
+    background: #fef3c7;
+    color: #92400e;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 7px;
+}
+
+/* ساختار بدنه */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+.hero-banner {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff;
+    border-radius: 16px;
+    padding: 35px 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 20px rgba(217, 119, 6, 0.2);
+}
+
+.hero-banner h2 {
+    font-size: 26px;
+    margin-bottom: 8px;
+}
+
+.section-title h2 {
+    font-size: 20px;
+    margin-bottom: 18px;
+    color: #1e293b;
+}
+
+.text-orange {
+    color: #ea580c;
+}
+
+/* شبکه کارت محصولات (دیجی‌کالایی) */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.product-image-wrap {
+    width: 100%;
+    height: 180px;
+    background: #fffbeb;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.product-image-wrap img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.discount-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 20px;
+}
+
+.product-info h3 {
+    font-size: 16px;
+    color: #1e293b;
+    margin-bottom: 6px;
+}
+
+.product-rating {
+    font-size: 12px;
+    color: #f59e0b;
+    margin-bottom: 12px;
+}
+
+.product-rating span {
+    color: #64748b;
+    margin-right: 4px;
+}
+
+.price-box {
+    margin-bottom: 15px;
+}
+
+.old-price {
+    font-size: 13px;
+    color: #94a3b8;
+    text-decoration: line-through;
+    margin-bottom: 2px;
+}
+
+.current-price {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.add-btn {
+    width: 100%;
+    background: #d97706;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.add-btn:hover {
+    background: #b45309;
+}
+
+/* بخش ثبت‌نام */
+.auth-section {
+    margin-top: 40px;
+}
+
+.auth-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 25px;
+    max-width: 600px;
+    margin: 0 auto;
     text-align: center;
 }
 
-/* استایل دکمه‌های افزودن به سبد خرید */
-.add-to-cart-btn {
-    background-color: #27ae60; /* رنگ سبز */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer; /* موس رو شبیه دست میکنه */
-    font-size: 16px;
-    width: 100%;
+.auth-card h3 {
+    color: #1e293b;
+    margin-bottom: 8px;
 }
 
-/* وقتی موس میره روی دکمه، رنگش کمی تیره بشه */
-.add-to-cart-btn:hover {
-    background-color: #219150;
+.auth-card p {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 18px;
+}
+
+.auth-form-step {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.auth-form-step input {
+    flex: 1;
+    max-width: 320px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 14px;
+    outline: none;
+}
+
+.btn-primary {
+    background: #d97706;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.btn-success {
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.status-msg {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* سبد خرید کشویی دیجی‌کالایی */
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    left: -380px; /* مخفی در حالت عادی */
+    width: 350px;
+    max-width: 90%;
+    height: 100vh;
+    background: #fff;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    transition: left 0.3s ease;
+}
+
+.cart-drawer.open {
+    left: 0;
+}
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px;
+}
+
+.cart-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.cart-item-title {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.cart-item-price {
+    font-size: 13px;
+    color: #d97706;
+    font-weight: 700;
+}
+
+.empty-cart-msg {
+    text-align: center;
+    color: #94a3b8;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+.drawer-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.total-price-text strong {
+    color: #d97706;
+    font-size: 18px;
+}
+
+.btn-checkout {
+    width: 100%;
+    background: #ef4444; /* قرمز شبیه دکمه نهایی دیجی‌کالا */
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    display: none;
+}
+
+.overlay.open {
+    display: block;
 }
