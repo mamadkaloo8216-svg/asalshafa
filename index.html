@@ -3,74 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فروشگاه من</title>
-    
+    <title>فروشگاه تخصصی عسل شفا</title>
     <link rel="stylesheet" href="style.css">
-
+    <!-- آیکون‌های مدرن FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- بخش هدر: بالای سایت که شامل اسم سایت و سبد خریده -->
-    <header>
-        <h1>فروشگاه آنلاین من</h1>
-        <div id="cart-info">
-            سبد خرید: <span id="cart-count">0</span> کالا
+    <!-- هدر بالای سایت -->
+    <header class="header">
+        <div class="top-nav">
+            <div class="logo">
+                <i class="fa-solid fa-jar"></i>
+                <span>عسل شفا</span>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="جستجوی نام عسل، خواص...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+
+            <div class="header-actions">
+                <button class="cart-btn" id="open-cart-btn">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- نوار بنر تخفیف -->
+        <div class="promo-banner">
+            <p>🎉 ارسال رایگان برای سفارش‌های بالای ۵۰۰ هزار تومان در سراسر کشور!</p>
         </div>
     </header>
-    <!-- بخش فاکتور و سبد خرید -->
-    <div style="background: white; padding: 20px; margin-top: 30px; border-radius: 8px; border: 1px solid #ddd;">
-        <h2>فاکتور سفارش شما</h2>
-        
-        <!-- لیست محصولاتی که کاربر انتخاب میکنه اینجا میاد -->
-        <ul id="cart-items" style="list-style: none; padding: 0; margin-bottom: 20px;">
-        </ul>
-        
-        <h3 style="text-align: left; color: #27ae60;">جمع کل: <span id="total-price">0</span> تومان</h3>
-        
-        <button id="submit-order-btn" style="background: #e67e22; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; width: 100%;">ثبت نهایی سفارش</button>
-        <p id="order-message" style="margin-top: 15px; font-weight: bold; text-align: center;"></p>
+
+    <div class="container">
+        <!-- بنر خوش‌آمدگویی و معرفی -->
+        <section class="hero-banner">
+            <div class="hero-text">
+                <h2>عسل ۱۰۰٪ طبیعی و خام کوهستان</h2>
+                <p>تضمین برگه آزمایشگاه، مستقیم از زنبوردار بدون واسطه</p>
+            </div>
+        </section>
+
+        <!-- بخش کاتالوگ محصولات -->
+        <section class="products-section">
+            <div class="section-title">
+                <h2><i class="fa-solid fa-fire text-orange"></i> پرفروش‌ترین محصولات عسل شفا</h2>
+            </div>
+            
+            <div id="products-container" class="products-grid">
+                <!-- محصولات با جاوااسکریپت اینجا ساخته می‌شوند -->
+            </div>
+        </section>
+
+        <!-- فرم احراز هویت و ثبت نام کاربر -->
+        <section class="auth-section">
+            <div class="auth-card">
+                <h3><i class="fa-solid fa-user-shield"></i> باشگاه مشتریان عسل شفا</h3>
+                <p>با ورود ایمیل، کد تخفیف اولین خرید و فاکتور برای شما ایمیل می‌شود.</p>
+                
+                <div id="step-1-email" class="auth-form-step">
+                    <input type="email" id="register-email" placeholder="ایمیل خود را وارد کنید...">
+                    <button id="send-code-btn" class="btn-primary">دریافت کد تایید</button>
+                </div>
+
+                <div id="step-2-code" class="auth-form-step" style="display: none;">
+                    <input type="text" id="verify-code" placeholder="کد ۶ رقمی پیامک شده/ایمیل شده">
+                    <button id="verify-btn" class="btn-success">تایید و ورود</button>
+                </div>
+
+                <p id="register-message" class="status-msg"></p>
+            </div>
+        </section>
     </div>
 
-    <!-- بخش اصلی: جایی که محصولات رو نمایش میدیم -->
-    <main>
-             <!-- بخش فرم ثبت‌نام -->
-    <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ddd; text-align: center;">
-        <h3>ثبت‌نام در عسل شفا</h3>
+    <!-- سبد خرید کشویی دیجی‌کالایی (Modal Drawer) -->
+    <div id="cart-drawer" class="cart-drawer">
+        <div class="drawer-header">
+            <h3>سبد خرید شما</h3>
+            <button id="close-cart-btn" class="close-btn">&times;</button>
+        </div>
         
-        <!-- مرحله اول: گرفتن ایمیل -->
-        <div id="step-1-email">
-            <p>برای ثبت‌نام، ایمیل خود را وارد کنید:</p>
-            <input type="email" id="register-email" placeholder="مثال: user@gmail.com" required style="padding: 10px; width: 80%; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;">
-            <br>
-            <button id="send-code-btn" style="background: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px;">ارسال کد تایید</button>
+        <div class="drawer-body" id="cart-items">
+            <!-- آیتم‌های سبد خرید اینجا اضافه می‌شوند -->
+            <p class="empty-cart-msg">سبد خرید شما در حال حاضر خالی است.</p>
         </div>
 
-        <!-- مرحله دوم: گرفتن کد تایید (این بخش اولش مخفیه) -->
-        <div id="step-2-code" style="display: none;">
-            <p style="color: green;">کد ۶ رقمی به ایمیل شما ارسال شد.</p>
-            <input type="number" id="verify-code" placeholder="کد ۶ رقمی را وارد کنید" required style="padding: 10px; width: 80%; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; text-align: center; letter-spacing: 5px;">
-            <br>
-            <button id="verify-btn" style="background: #27ae60; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px;">تایید نهایی ثبت‌نام</button>
+        <div class="drawer-footer">
+            <div class="total-row">
+                <span>مبلغ قابل پرداخت:</span>
+                <span class="total-price-text"><strong id="total-price">0</strong> تومان</span>
+            </div>
+            <button id="submit-order-btn" class="btn-checkout">ثبت و ادامه خرید</button>
+            <p id="order-message" class="status-msg"></p>
         </div>
-        
-        <!-- جایی که پیام‌ها رو نشون میدیم -->
-        <p id="register-message" style="margin-top: 15px; font-weight: bold;"></p>
     </div>
+    <div id="overlay" class="overlay"></div>
 
-    <h2>محصولات ما</h2>
-    
-    <!-- یه ظرف خالی می‌سازیم تا اطلاعات رو از پایتون بگیریم و بریزیم اینجا -->
-    <div id="products-container" style="display: flex; gap: 20px; flex-wrap: wrap; width: 100%;">
-    </div>
-
-    </main>
-
-    <!-- بخش فوتر: پایین سایت -->
-    <footer>
-        <p>تمامی حقوق برای فروشگاه من محفوظ است.</p>
-    </footer>
-    <!-- این خط رو قبل از بسته شدن body اضافه کن -->
     <script src="script.js"></script>
-
 </body>
 </html>
